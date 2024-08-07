@@ -26,7 +26,7 @@ func SerializeBook(bookModel models.Book) Book {
 }
 
 func GetAllBooks(w http.ResponseWriter, r *http.Request) {
-	newBooks := models.GetAllBools()
+	newBooks := models.GetAllBooks()
 	serializedBooks := make([]Book, len(newBooks))
 	for index, modelBook := range newBooks {
 		serializedBooks[index] = SerializeBook(modelBook)
@@ -46,9 +46,9 @@ func GetBookById(w http.ResponseWriter, r *http.Request) {
 	}
 	bookDetails, _ := models.GetBoolById(id)
 
-	serilizedBook := SerializeBook(bookDetails)
+	serializedBook := SerializeBook(bookDetails)
 
-	resp, _ := json.Marshal(serilizedBook)
+	resp, _ := json.Marshal(serializedBook)
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(resp)
@@ -58,8 +58,8 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 	book := &models.Book{}
 	utils.ParseBody(r, book)
 	b := book.CreateBook()
-	serilizedBook := SerializeBook(b)
-	resp, _ := json.Marshal(serilizedBook)
+	serializedBook := SerializeBook(b)
+	resp, _ := json.Marshal(serializedBook)
 	w.WriteHeader(http.StatusOK)
 	w.Write(resp)
 }
@@ -73,8 +73,8 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	book := models.DeleteBook(id)
-	serilizedBook := SerializeBook(book)
-	resp, _ := json.Marshal(serilizedBook)
+	serializedBook := SerializeBook(book)
+	resp, _ := json.Marshal(serializedBook)
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(resp)
@@ -104,9 +104,9 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 
 	db.Save(&bookDetails)
 
-	serilizedBook := SerializeBook(bookDetails)
+	serializedBook := SerializeBook(bookDetails)
 
-	resp, _ := json.Marshal(serilizedBook)
+	resp, _ := json.Marshal(serializedBook)
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(resp)
